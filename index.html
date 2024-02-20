@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Little pay Test</title>
+    <link rel="stylesheet" href="src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <form id="form">
+        <input
+          type="text"
+          id="cc_number"
+          name="cc_number"
+          placeholder="Card Number"
+          value="5200000000002151"
+          required
+        />
+        <input
+          type="text"
+          id="cc_name"
+          name="cc_name"
+          placeholder="Cardholder Name"
+          value="Daniel"
+          required
+        />
+        <input
+          type="text"
+          id="cc_exp"
+          name="cc_exp"
+          placeholder="Expiry Date"
+          value="01/27"
+          required
+        />
+        <input
+          type="text"
+          id="cc_cvv"
+          name="cc_cvv"
+          placeholder="CVV"
+          value="000"
+          required
+        />
+        <button type="submit">Submit</button>
+      </form>
+      <form id="confirm" class="hide">
+        <p>Are you sure you want to make this payment</p>
+        <button type="submit" id="confirm-button">Confirm</button>
+      </form>
+    </div>
+    <script type="module" src="/src/index.ts"></script>
+    <script type="module" src="/src/test.ts"></script>
+  </body>
+</html>

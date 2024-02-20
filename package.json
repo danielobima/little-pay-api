@@ -1,0 +1,45 @@
+{
+  "name": "little-pay-api",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "An API library for interacting with the Little Pay API",
+  "exports": {
+    "import": "./dist/index.js",
+    "require": "./dist/cjs/index.js"
+  },
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "author": {
+    "email": "daniel.maina@little.africa",
+    "name": "Daniel Maina",
+    "url": "https://danielobima.com"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://pay.little.africa/documentation",
+  "scripts": {
+    "dev": "vite",
+    "preview": "vite preview",
+    "build": "node tools/cleanup.cjs && npm run build:cjs && npm run build:esm && npm run build:types && node tools/cjsHandler.cjs ",
+    "build:cjs": "tsc -p config/tsconfig.cjs.json",
+    "build:esm": "tsc -p config/tsconfig.esm.json",
+    "build:umd": "webpack --config config/webpack.config.cjs",
+    "build:types": "tsc -p config/tsconfig.types.json",
+    "clean": "node tools/cleanup.cjs",
+    "package": "npm run build && npm pack",
+    "test": "jest --no-cache --runInBand",
+    "test:cov": "jest --coverage --no-cache --runInBand",
+    "addscope": "node tools/packagejson name @tomchen/example-typescript-package"
+  },
+  "devDependencies": {
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.1.0",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "axios": "^1.6.7"
+  }
+}
