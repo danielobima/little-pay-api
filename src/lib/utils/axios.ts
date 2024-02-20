@@ -15,7 +15,7 @@ baseAxios.interceptors.response.use(
     }
 
     switch (true) {
-      case 400 >= error.response.status && error.response.status < 500:
+      case error.response.status >= 400 && error.response.status < 500:
         return Promise.reject(
           new LittlePayError(
             "INVALID_REQUEST",
