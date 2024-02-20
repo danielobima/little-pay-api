@@ -18,6 +18,10 @@
   },
   "license": "Apache-2.0",
   "homepage": "https://pay.little.africa/documentation",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/littleride/little-pay-api.git"
+  },
   "scripts": {
     "dev": "vite",
     "preview": "vite preview",
