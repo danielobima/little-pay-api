@@ -4,8 +4,8 @@ module.exports = {
   mode: "production",
   entry: "./src/index.ts",
   output: {
-    path: path.resolve(__dirname, "../dist/umd"),
-    filename: "index.js",
+    path: path.resolve(__dirname, "../dist"),
+    filename: "little-pay-api.min.js",
     library: "little-pay-api",
     libraryTarget: "umd",
     globalObject: "this",
