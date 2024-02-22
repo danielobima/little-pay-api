@@ -4,7 +4,7 @@ export type PaymentProvider = "MPESA" | "CARDS";
 type MpesaPayload = {
   mobile: string;
 };
-type CardsPayload = {
+export type CardDetails = {
   cc_number: string;
   cc_name: string;
   cc_cvv: string;
@@ -13,7 +13,7 @@ type CardsPayload = {
 type Payload<T extends PaymentProvider> = T extends "MPESA"
   ? MpesaPayload
   : T extends "CARDS"
-  ? CardsPayload
+  ? CardDetails
   : never;
 export interface ProcessorPayload<T extends PaymentProvider> {
   type: T;

@@ -48,9 +48,15 @@ export type CreateIntentParams = {
   /**
    * A URL to post the results of the payment to.
    *
-   * The payload format can be found at
+   * The payload format can be found at {@link https://pay.little.africa/documentation/docs/intro/}
    */
   callbackUrl: string;
+
+  /**
+   * If you use the intent checkout page, the user will be redirected to this URL after the payment is completed.
+   */
+  returnUrl?: string;
+
   /**
    * The time at which the intent will expire. Must be a Unix timestamp.
    */
@@ -87,13 +93,19 @@ export type CreateIntentResponse = {
 export class Intent {
   private creationParams: CreateIntentParams;
   private checkoutUrl?: string;
-  reference?: string;
-  paToken?: PaToken;
+  private reference?: string;
+  private paToken?: PaToken;
 
   constructor(params: CreateIntentParams) {
     this.creationParams = params;
   }
 
+  /**
+   * Get the intent reference.
+   *
+   * @throws {LittlePayError} If the reference is not available.
+   * @returns {string} The intent reference
+   */
   getReference(): string {
     if (!this.reference) {
       throw new LittlePayError("INVALID_DATA", "Reference not available");
@@ -102,11 +114,11 @@ export class Intent {
     return this.reference;
   }
 
-  getPaToken(): PaToken {
-    if (!this.paToken) {
-      throw new LittlePayError("INVALID_DATA", "PaToken not available");
-    }
-
+  /**
+   * Get the PaToken.
+   * @returns {string} The PaToken
+   */
+  getPaToken(): PaToken | undefined {
     return this.paToken;
   }
 
@@ -146,6 +158,23 @@ export class Intent {
     };
   }
 
+  /**
+   * Get the checkout URL.
+   * @returns {string} The checkout URL
+   * @throws {LittlePayError} Will throw an error if the checkout URL is not available.
+   */
+  getCheckoutUrl(): string {
+    if (!this.checkoutUrl) {
+      throw new LittlePayError("INVALID_DATA", "Checkout URL not available");
+    }
+
+    return this.checkoutUrl;
+  }
+
+  /**
+   * Redirects the user to the checkout page. If you set a return URL when creating the intent, the user will be redirected to that URL after the payment is completed.
+   * @throws {LittlePayError} If the checkout URL is not available.
+   */
   redirectToCheckout(): void {
     if (!this.checkoutUrl) {
       throw new LittlePayError("SERVER_ERROR", "Checkout URL not available");

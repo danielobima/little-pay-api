@@ -6,6 +6,7 @@ import {
   PaymentProcessorOptions,
   ProcessPaymentResponse,
   ProcessorPayload,
+  CardDetails,
   PaymentProvider,
 } from "./lib/entities/PaymentProcessor";
 import { LittlePayError } from "./lib/utils/errors";
@@ -19,4 +20,5 @@ export type {
   ProcessorPayload,
   BillingAddress,
   PaymentProvider,
+  CardDetails,
 };

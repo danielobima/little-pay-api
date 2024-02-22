@@ -53,6 +53,7 @@ if (form) {
             phoneNumber: "254712345678",
           },
         },
+        returnUrl: "https://google.com",
       });
 
       const paymentProcessor = client.createPaymentProcessor(

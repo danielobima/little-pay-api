@@ -96,7 +96,7 @@ export class LittlePayClient {
   ) {
     if (paymentProcessor.paymentPayload.type === "CARDS") {
       const paToken =
-        intent.paToken ??
+        intent.getPaToken() ??
         (await intent.createPaToken(
           paymentProcessor.paymentPayload as ProcessorPayload<"CARDS">
         ));
@@ -118,7 +118,7 @@ export class LittlePayClient {
    */
   async processPayment(options?: PaymentProcessorOptions) {
     return new Promise<ProcessPaymentResponse>(async (resolve, reject) => {
-      if (!this.intent || !this.intent.reference || !this.paymentProcessor) {
+      if (!this.intent || !this.paymentProcessor) {
         throw new LittlePayError(
           "INVALID_DATA",
           "Intent and Payment Processor not set"
@@ -132,7 +132,7 @@ export class LittlePayClient {
           throw new LittlePayError("INVALID_DATA", "Details not validated");
         }
         const enrollmentService = new EnrollmentService(
-          this.intent.reference,
+          this.intent.getReference(),
           this.deviceDetails,
           this.paymentProcessor
         );
