@@ -1,31 +1,25 @@
 import { baseAxios } from "../utils/axios";
 
 export type PaymentProvider = "MPESA" | "CARDS";
-
-export type MpesaPayload = {
+type MpesaPayload = {
   mobile: string;
 };
-
-export type CardsPayload = {
+type CardsPayload = {
   cc_number: string;
   cc_name: string;
   cc_cvv: string;
   cc_exp: string;
 };
-
 type Payload<T extends PaymentProvider> = T extends "MPESA"
   ? MpesaPayload
   : T extends "CARDS"
   ? CardsPayload
   : never;
-
 export interface ProcessorPayload<T extends PaymentProvider> {
   type: T;
   payment: Payload<T>;
 }
-
 export type PaymentStatus = "COMPLETED" | "PENDING" | "FAILED";
-
 export type ProcessPaymentResponse = {
   status: PaymentStatus;
   message: string;
