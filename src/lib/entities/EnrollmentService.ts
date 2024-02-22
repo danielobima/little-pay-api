@@ -54,6 +54,9 @@ export class EnrollmentService {
   }
 
   async stepUp(options?: PaymentProcessorOptions): Promise<any> {
+    if (options?.stepUpHandler) {
+      return options.stepUpHandler(this.stepUpUrl!, this.accessToken!);
+    }
     if (!this.stepUpUrl || !this.accessToken) {
       throw new LittlePayError("INVALID_DATA", "Step up URL not available");
     }

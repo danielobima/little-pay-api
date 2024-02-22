@@ -40,6 +40,12 @@ export type PaymentProcessorOptions = {
    * @default "_blank"
    */
   stepUpTarget?: string;
+
+  /**
+   * This option will override the default authentication step up behavior
+   * @default undefined
+   */
+  stepUpHandler?: (url: string, token: string) => any;
 };
 export class PaymentProcessor<T extends PaymentProvider> {
   paymentPayload: ProcessorPayload<T>;

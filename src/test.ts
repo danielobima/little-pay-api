@@ -1,9 +1,9 @@
 import { LittlePayClient } from ".";
 
 const client = new LittlePayClient({
-  clientId: "cb3ea1ede12d49a5",
-  clientSecret: "7tkd8eJBkp35ItU4G9XeoQ==",
-  tokenId: "53078b9e-0d45-4941-b22a-8209d3139314",
+  clientId: "81af9dffa51f6059",
+  clientSecret: "f9oNskEf6kiOZk/GZiARPw==",
+  tokenId: "9f252db9-dfbd-4af6-be88-24f1635c5de3",
 });
 
 const form = document.getElementById("form");
@@ -87,6 +87,9 @@ if (confirmForm) {
     try {
       const response = await client.processPayment({
         longPoll: true,
+        stepUpHandler: (url, token) => {
+          console.log(url, token);
+        },
       });
 
       console.log(response);
