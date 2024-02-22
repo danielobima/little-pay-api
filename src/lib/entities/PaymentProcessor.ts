@@ -13,15 +13,16 @@ export type CardsPayload = {
   cc_exp: string;
 };
 
-export type ProcessorPayload =
-  | {
-      type: "MPESA";
-      payment: MpesaPayload;
-    }
-  | {
-      type: "CARDS";
-      payment: CardsPayload;
-    };
+type Payload<T extends PaymentProvider> = T extends "MPESA"
+  ? MpesaPayload
+  : T extends "CARDS"
+  ? CardsPayload
+  : never;
+
+export interface ProcessorPayload<T extends PaymentProvider> {
+  type: T;
+  payment: Payload<T>;
+}
 
 export type PaymentStatus = "COMPLETED" | "PENDING" | "FAILED";
 
@@ -46,11 +47,11 @@ export type PaymentProcessorOptions = {
    */
   stepUpTarget?: string;
 };
-export class PaymentProcessor {
-  paymentPayload: ProcessorPayload;
+export class PaymentProcessor<T extends PaymentProvider> {
+  paymentPayload: ProcessorPayload<T>;
   private reference: string;
 
-  constructor(payload: ProcessorPayload, reference: string) {
+  constructor(payload: ProcessorPayload<T>, reference: string) {
     //TODO: Add client side validation
     this.paymentPayload = payload;
     this.reference = reference;

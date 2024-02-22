@@ -55,7 +55,7 @@ if (form) {
         },
       });
 
-      const paymentProcessor = await client.createPaymentProcessor(
+      const paymentProcessor = client.createPaymentProcessor(
         {
           type: "CARDS",
           payment: {

@@ -8,6 +8,7 @@ import { CreateIntentParams, Intent } from "./Intent";
 import {
   PaymentProcessor,
   PaymentProcessorOptions,
+  PaymentProvider,
   ProcessPaymentResponse,
   ProcessorPayload,
 } from "./PaymentProcessor";
@@ -40,7 +41,7 @@ export class LittlePayClient {
   private clientSecret: string;
   private tokenId: string;
   private intent?: Intent;
-  private paymentProcessor?: PaymentProcessor;
+  private paymentProcessor?: PaymentProcessor<any>;
   private deviceDetails?: DeviceDetails;
   private validated: boolean = false;
 
@@ -74,12 +75,12 @@ export class LittlePayClient {
    * Creates a payment processor with the given payload and reference.
    * @param {ProcessorPayload} payload - The payload for the payment processor.
    * @param {string} reference - The reference for the payment processor.
-   * @returns {Promise<PaymentProcessor>} A promise that resolves to the created PaymentProcessor instance.
+   * @returns {PaymentProcessor} A promise that resolves to the created PaymentProcessor instance.
    */
-  async createPaymentProcessor(
-    payload: ProcessorPayload,
+  createPaymentProcessor<T extends PaymentProvider>(
+    payload: ProcessorPayload<T>,
     reference: string
-  ): Promise<PaymentProcessor> {
+  ): PaymentProcessor<T> {
     return new PaymentProcessor(payload, reference);
   }
 
@@ -89,11 +90,16 @@ export class LittlePayClient {
    * @param intent - The intent to validate details for.
    * @param paymentProcessor - The payment processor to use for validation.
    */
-  async validateDetails(intent: Intent, paymentProcessor: PaymentProcessor) {
+  async validateDetails<T extends PaymentProvider>(
+    intent: Intent,
+    paymentProcessor: PaymentProcessor<T>
+  ) {
     if (paymentProcessor.paymentPayload.type === "CARDS") {
       const paToken =
         intent.paToken ??
-        (await intent.createPaToken(paymentProcessor.paymentPayload));
+        (await intent.createPaToken(
+          paymentProcessor.paymentPayload as ProcessorPayload<"CARDS">
+        ));
       const detailsCollectionsService = new DetailsCollectionService(paToken);
 
       await detailsCollectionsService.collectDetails();

@@ -12,7 +12,7 @@ export type PaymentAuthActions = "MAKE_PAYMENT" | "AUTHENTICATE" | "FAILED";
 
 export class EnrollmentService {
   private deviceDetails: DeviceDetails;
-  private paymentProcessor: PaymentProcessor;
+  private paymentProcessor: PaymentProcessor<"CARDS">;
   private reference: string;
   private stepUpUrl?: string;
   private accessToken?: string;
@@ -20,7 +20,7 @@ export class EnrollmentService {
   constructor(
     reference: string,
     deviceDetails: DeviceDetails,
-    paymentProcessor: PaymentProcessor
+    paymentProcessor: PaymentProcessor<"CARDS">
   ) {
     if (paymentProcessor.paymentPayload.type !== "CARDS") {
       throw new LittlePayError("INVALID_DATA", "Invalid payment type");

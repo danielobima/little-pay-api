@@ -71,7 +71,7 @@ export type CreateIntentParams = {
   /**
    * The metadata for the intent.
    */
-  metadata?: ProcessorPayload;
+  metadata?: ProcessorPayload<any>;
 };
 
 export type CreateIntentResponse = {
@@ -154,7 +154,7 @@ export class Intent {
     window.location.assign(this.checkoutUrl);
   }
 
-  async createPaToken(params: ProcessorPayload): Promise<PaToken> {
+  async createPaToken(params: ProcessorPayload<"CARDS">): Promise<PaToken> {
     if (!this.reference) {
       throw new LittlePayError("INVALID_REQUEST", "Reference not available");
     }
