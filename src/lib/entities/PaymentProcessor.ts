@@ -1,4 +1,5 @@
 import { baseAxios } from "../utils/axios";
+import { paymentPayloadValidator } from "../utils/validation";
 
 export type PaymentProvider = "MPESA" | "CARDS";
 type MpesaPayload = {
@@ -10,6 +11,7 @@ export type CardDetails = {
   cc_cvv: string;
   cc_exp: string;
 };
+
 type Payload<T extends PaymentProvider> = T extends "MPESA"
   ? MpesaPayload
   : T extends "CARDS"
@@ -53,7 +55,8 @@ export class PaymentProcessor<T extends PaymentProvider> {
 
   constructor(payload: ProcessorPayload<T>, reference: string) {
     //TODO: Add client side validation
-    this.paymentPayload = payload;
+
+    this.paymentPayload = paymentPayloadValidator(payload);
     this.reference = reference;
   }
 

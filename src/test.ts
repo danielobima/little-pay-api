@@ -31,15 +31,7 @@ if (form) {
         description: "Test payment",
         expiresAt: 1,
         key: new Date().getTime().toString(),
-        metadata: {
-          type: "CARDS",
-          payment: {
-            cc_number,
-            cc_cvv,
-            cc_exp,
-            cc_name,
-          },
-        },
+
         payload: {
           billingAddress: {
             firstName: "DANIEL",
@@ -87,9 +79,6 @@ if (confirmForm) {
     try {
       const response = await client.processPayment({
         longPoll: true,
-        stepUpHandler: (url, token) => {
-          console.log(url, token);
-        },
       });
 
       console.log(response);

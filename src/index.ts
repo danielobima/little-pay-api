@@ -10,8 +10,19 @@ import {
   PaymentProvider,
 } from "./lib/entities/PaymentProcessor";
 import { LittlePayError } from "./lib/utils/errors";
+import {
+  cardValidation,
+  paymentPayloadValidator,
+} from "./lib/utils/validation";
 
-export { LittlePayClient, LittlePayError, PaymentProcessor, Intent };
+export {
+  LittlePayClient,
+  LittlePayError,
+  PaymentProcessor,
+  Intent,
+  paymentPayloadValidator,
+  cardValidation,
+};
 
 export type {
   CreateIntentParams,

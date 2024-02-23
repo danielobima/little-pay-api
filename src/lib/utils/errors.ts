@@ -1,4 +1,4 @@
-export type ErrorCode =
+type ErrorCode =
   | "INVALID_REQUEST"
   | "SERVER_ERROR"
   | "NETWORK_ERROR"
@@ -7,9 +7,12 @@ export type ErrorCode =
   | "UNKNOWN_ERROR";
 
 export class LittlePayError extends Error {
+  code: ErrorCode;
+  name: string;
   constructor(code: ErrorCode, message: string) {
-    super(`${code} - ${message}`);
+    super(`${message}`);
     this.name = this.constructor.name;
+    this.code = code;
   }
 }
 

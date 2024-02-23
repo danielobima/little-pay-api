@@ -39,7 +39,9 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "axios": "^1.6.7"
+    "axios": "^1.6.7",
+    "card-validator": "^9.1.0",
+    "libphonenumber-js": "^1.10.56"
   },
   "bugs": {
     "url": "https://github.com/littleride/little-pay-api/issues"
