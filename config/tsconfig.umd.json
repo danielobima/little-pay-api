@@ -1,7 +1,10 @@
 {
   "extends": "../tsconfig",
   "compilerOptions": {
-    "module": "commonjs" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */,
-    "declaration": false /* Generates corresponding '.d.ts' file. */
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "module": "ES2015" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */,
+    "declaration": false /* Generates corresponding '.d.ts' file. */,
+    "outDir": "../dist/umd" /* Redirect output structure to the directory. */
   }
 }

@@ -24,7 +24,7 @@
     "build": "node tools/cleanup.cjs && npm run build:cjs && npm run build:esm && npm run build:types && npm run build:umd && node tools/cjsHandler.cjs ",
     "build:cjs": "tsc -p config/tsconfig.cjs.json",
     "build:esm": "tsc -p config/tsconfig.esm.json",
-    "build:umd": "webpack --config config/webpack.config.cjs",
+    "build:umd": "tsc -p config/tsconfig.umd.json && rollup --config config/rollup.config.cjs",
     "build:types": "tsc -p config/tsconfig.types.json",
     "clean": "node tools/cleanup.cjs",
     "package": "npm run build && npm pack",
@@ -32,6 +32,12 @@
     "test:cov": "jest --coverage --no-cache --runInBand"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.12.0",
+    "rollup-plugin-polyfill-node": "^0.13.0",
     "ts-loader": "^9.5.1",
     "typescript": "^5.2.2",
     "vite": "^5.1.0",

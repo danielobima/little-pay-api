@@ -1,30 +1,37 @@
 const path = require("path");
 
 module.exports = {
-  mode: "production",
-  entry: "./dist/index.js",
-  output: {
-    path: path.resolve(__dirname, "../dist"),
-    filename: "little-pay-api.min.js",
-    library: "little-pay-api",
-    libraryTarget: "umd",
-    globalObject: "this",
+  entry: {
+    "little-pay-api.min": "./dist/index.js",
   },
+  output: {
+    path: path.resolve(__dirname, "_bundles"),
+    filename: "[name].js",
+    libraryTarget: "umd",
+    library: "MyLib",
+    umdNamedDefine: true,
+  },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js"],
+  },
+  devtool: "source-map",
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      minimize: true,
+      sourceMap: true,
+      include: /\.min\.js$/,
+    }),
+  ],
   module: {
-    rules: [
+    loaders: [
       {
-        test: /\.ts(x*)?$/,
+        test: /\.tsx?$/,
+        loader: "ts-loader",
         exclude: /node_modules/,
-        use: {
-          loader: "ts-loader",
-          options: {
-            configFile: "config/tsconfig.umd.json",
-          },
+        query: {
+          declaration: false,
         },
       },
     ],
-  },
-  resolve: {
-    extensions: [".ts", ".js", ".tsx", ".jsx"],
   },
 };
