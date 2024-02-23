@@ -2,7 +2,7 @@ const path = require("path");
 
 module.exports = {
   mode: "production",
-  entry: "./src/index.ts",
+  entry: "./dist/index.js",
   output: {
     path: path.resolve(__dirname, "../dist"),
     filename: "little-pay-api.min.js",

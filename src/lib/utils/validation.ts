@@ -3,8 +3,8 @@ import {
   CardDetails,
   PaymentProvider,
   ProcessorPayload,
-} from "../entities/PaymentProcessor";
-import { LittlePayError } from "./errors";
+} from "../entities/PaymentProcessor.js";
+import { LittlePayError } from "./errors.js";
 import cardValidator from "card-validator";
 
 const humanReadableCardFields = {

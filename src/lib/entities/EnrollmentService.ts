@@ -1,7 +1,10 @@
-import { baseAxios } from "../utils/axios";
-import { LittlePayError } from "../utils/errors";
-import { DeviceDetails } from "./DetailsCollectionService";
-import { PaymentProcessor, PaymentProcessorOptions } from "./PaymentProcessor";
+import { baseAxios } from "../utils/axios.js";
+import { LittlePayError } from "../utils/errors.js";
+import { DeviceDetails } from "./DetailsCollectionService.js";
+import {
+  PaymentProcessor,
+  PaymentProcessorOptions,
+} from "./PaymentProcessor.js";
 
 export type PaymentAuthActions = "MAKE_PAYMENT" | "AUTHENTICATE" | "FAILED";
 

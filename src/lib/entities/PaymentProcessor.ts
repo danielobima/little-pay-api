@@ -1,5 +1,5 @@
-import { baseAxios } from "../utils/axios";
-import { paymentPayloadValidator } from "../utils/validation";
+import { baseAxios } from "../utils/axios.js";
+import { paymentPayloadValidator } from "../utils/validation.js";
 
 export type PaymentProvider = "MPESA" | "CARDS";
 type MpesaPayload = {

@@ -1,17 +1,17 @@
-import { LittlePayError } from "../utils/errors";
+import { LittlePayError } from "../utils/errors.js";
 import {
   DetailsCollectionService,
   DeviceDetails,
-} from "./DetailsCollectionService";
-import { EnrollmentService } from "./EnrollmentService";
-import { CreateIntentParams, Intent } from "./Intent";
+} from "./DetailsCollectionService.js";
+import { EnrollmentService } from "./EnrollmentService.js";
+import { CreateIntentParams, Intent } from "./Intent.js";
 import {
   PaymentProcessor,
   PaymentProcessorOptions,
   PaymentProvider,
   ProcessPaymentResponse,
   ProcessorPayload,
-} from "./PaymentProcessor";
+} from "./PaymentProcessor.js";
 
 /**
  * Parameters for constructing a LittlePayClient instance. All values are available in the LittlePay dashboard.

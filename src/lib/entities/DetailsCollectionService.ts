@@ -1,4 +1,4 @@
-import { PaToken } from "./PaToken";
+import { PaToken } from "./PaToken.js";
 
 export type DeviceDetails = {
   httpBrowserColorDepth: number;

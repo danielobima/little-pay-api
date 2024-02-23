@@ -1,8 +1,8 @@
-import { BillingAddress } from "./BillingAddress";
-import { PaToken } from "./PaToken";
-import { baseAxios } from "../utils/axios";
-import { ProcessorPayload } from "./PaymentProcessor";
-import { LittlePayError } from "../utils/errors";
+import { BillingAddress } from "./BillingAddress.js";
+import { PaToken } from "./PaToken.js";
+import { baseAxios } from "../utils/axios.js";
+import { ProcessorPayload } from "./PaymentProcessor.js";
+import { LittlePayError } from "../utils/errors.js";
 
 export type IntentBody = {
   metadata: any & {
