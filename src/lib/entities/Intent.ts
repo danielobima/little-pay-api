@@ -33,7 +33,8 @@ export type CreateIntentParams = {
    */
   amount: number;
   /**
-   * The currency to be used for the payment. Must be a valid ISO 4217 currency code {@link https://en.wikipedia.org/wiki/ISO_4217}. Example: "KES".
+   * The currency to be used for the payment. Must be a valid ISO 4217 currency code
+   * {@link https://en.wikipedia.org/wiki/ISO_4217}. Example: "KES".
    *
    * Currencies are enabled and disabled in the LittlePay dashboard.
    *
@@ -54,6 +55,8 @@ export type CreateIntentParams = {
 
   /**
    * If you use the intent checkout page, the user will be redirected to this URL after the payment is completed.
+   * If you are not using the intent checkout page but there was a 3DS challenge, the user will be redirected to
+   * this URL after the 3DS challenge is completed.
    */
   returnUrl?: string;
 

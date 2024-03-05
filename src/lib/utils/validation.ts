@@ -47,16 +47,24 @@ export const paymentPayloadValidator = <T extends PaymentProvider>(
   payload: ProcessorPayload<T>
 ): ProcessorPayload<T> => {
   switch (payload.type) {
+    case "MTN":
     case "MPESA":
-      const mpesaPayload: ProcessorPayload<"MPESA"> =
-        payload as ProcessorPayload<"MPESA">;
+      const mpesaPayload: ProcessorPayload<"MPESA" | "MTN"> =
+        payload as ProcessorPayload<"MPESA" | "MTN">;
 
-      const parsed = parse(mpesaPayload?.payment?.mobile ?? "", "KE");
+      const mobile = mpesaPayload?.payment?.mobile;
+      if (!mobile?.startsWith("+")) {
+        throw new LittlePayError(
+          "INVALID_DATA",
+          "Mobile number should start with +"
+        );
+      }
+      const parsed = parse(mpesaPayload?.payment?.mobile ?? "");
       if (!parsed?.isValid()) {
         throw new LittlePayError("INVALID_DATA", "Invalid mobile number");
       }
       return {
-        type: "MPESA",
+        type: payload.type,
         payment: {
           mobile: `${parsed.countryCallingCode}${parsed.nationalNumber}`,
         },
