@@ -1,6 +1,11 @@
 import { BillingAddress } from "./lib/entities/BillingAddress.js";
+import { DeviceDetails } from "./lib/entities/DetailsCollectionService.js";
 import { Intent, CreateIntentParams } from "./lib/entities/Intent.js";
-import { LittlePayClient } from "./lib/entities/LittlePayClient.js";
+import {
+  LittlePayClient,
+  LittlePayClientConstructorParams,
+} from "./lib/entities/LittlePayClient.js";
+import { PaToken } from "./lib/entities/PaToken.js";
 import {
   PaymentProcessor,
   PaymentProcessorOptions,
@@ -8,8 +13,11 @@ import {
   ProcessorPayload,
   CardDetails,
   PaymentProvider,
+  Payload,
+  PaymentStatus,
+  MobilePayload,
 } from "./lib/entities/PaymentProcessor.js";
-import { LittlePayError } from "./lib/utils/errors.js";
+import { ErrorCode, LittlePayError } from "./lib/utils/errors.js";
 import {
   cardValidation,
   paymentPayloadValidator,
@@ -32,4 +40,11 @@ export type {
   BillingAddress,
   PaymentProvider,
   CardDetails,
+  DeviceDetails,
+  PaToken,
+  ErrorCode,
+  Payload,
+  PaymentStatus,
+  LittlePayClientConstructorParams,
+  MobilePayload,
 };

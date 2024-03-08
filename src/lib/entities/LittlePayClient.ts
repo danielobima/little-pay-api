@@ -18,7 +18,7 @@ import {
  *
  * {@link https://pay.little.africa/}
  */
-type LittlePayClientConstructorParams = {
+export type LittlePayClientConstructorParams = {
   /**
    * The client ID for the LittlePay API.
    */
@@ -47,7 +47,7 @@ export class LittlePayClient {
 
   /**
    * Constructs a new instance of the LittlePayClient class.
-   * @param {LittlePayClientConstructorParams} params The parameters for constructing the LittlePayClient.
+   * @param params - The parameters for constructing the LittlePayClient.
    */
   constructor({
     clientId,
@@ -62,8 +62,8 @@ export class LittlePayClient {
   /**
    * Creates a new payment intent.
    *
-   * @param {CreateIntentParams} params The parameters for creating the intent.
-   * @returns {Promise<Intent>} A promise that resolves to the created intent.
+   * @param params - The parameters for creating the intent.
+   * @returns - A promise that resolves to the created intent.
    */
   async createIntent(params: CreateIntentParams): Promise<Intent> {
     const intent = new Intent(params);
@@ -73,9 +73,9 @@ export class LittlePayClient {
 
   /**
    * Creates a payment processor with the given payload and reference.
-   * @param {ProcessorPayload} payload - The payload for the payment processor.
-   * @param {string} reference - The reference for the payment processor.
-   * @returns {PaymentProcessor} A promise that resolves to the created PaymentProcessor instance.
+   * @param payload - The payload for the payment processor.
+   * @param reference - The reference for the payment processor.
+   * @returns - A promise that resolves to the created PaymentProcessor instance.
    */
   createPaymentProcessor<T extends PaymentProvider>(
     payload: ProcessorPayload<T>,
@@ -113,8 +113,8 @@ export class LittlePayClient {
   /**
    * Processes a payment using the configured payment processor.
    * @param options - Optional payment processor options.
-   * @returns A promise that resolves to the processed payment response.
-   * @throws {LittlePayError} If the intent or payment processor is not set, or if the details are not validated.
+   * @returns - A promise that resolves to the processed payment response.
+   * @throws {@link LittlePayError} If the intent or payment processor is not set, or if the details are not validated.
    */
   async processPayment(options?: PaymentProcessorOptions) {
     return new Promise<ProcessPaymentResponse>(async (resolve, reject) => {

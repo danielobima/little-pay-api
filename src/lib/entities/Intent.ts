@@ -106,8 +106,8 @@ export class Intent {
   /**
    * Get the intent reference.
    *
-   * @throws {LittlePayError} If the reference is not available.
-   * @returns {string} The intent reference
+   * @throws {@link LittlePayError} If the reference is not available.
+   * @returns - The intent reference
    */
   getReference(): string {
     if (!this.reference) {
@@ -119,7 +119,7 @@ export class Intent {
 
   /**
    * Get the PaToken.
-   * @returns {string} The PaToken
+   * @returns - The PaToken
    */
   getPaToken(): PaToken | undefined {
     return this.paToken;
@@ -163,8 +163,8 @@ export class Intent {
 
   /**
    * Get the checkout URL.
-   * @returns {string} The checkout URL
-   * @throws {LittlePayError} Will throw an error if the checkout URL is not available.
+   * @returns - The checkout URL
+   * @throws {@link LittlePayError} Will throw an error if the checkout URL is not available.
    */
   getCheckoutUrl(): string {
     if (!this.checkoutUrl) {
@@ -176,7 +176,7 @@ export class Intent {
 
   /**
    * Redirects the user to the checkout page. If you set a return URL when creating the intent, the user will be redirected to that URL after the payment is completed.
-   * @throws {LittlePayError} If the checkout URL is not available.
+   * @throws {@link LittlePayError} If the checkout URL is not available.
    */
   redirectToCheckout(): void {
     if (!this.checkoutUrl) {

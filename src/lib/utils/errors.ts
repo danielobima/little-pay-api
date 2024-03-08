@@ -1,4 +1,7 @@
-type ErrorCode =
+/**
+ * Possible error codes
+ */
+export type ErrorCode =
   | "INVALID_REQUEST"
   | "SERVER_ERROR"
   | "NETWORK_ERROR"

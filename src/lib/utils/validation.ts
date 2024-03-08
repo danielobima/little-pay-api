@@ -18,8 +18,8 @@ const humanReadableCardFields = {
  * Validates the given value based on the specified card field.
  * @param field - The card field to validate.
  * @param value - The value to be validated.
- * @returns The validation result.
- * @throws {LittlePayError} If the card field is invalid.
+ * @returns - The validation result.
+ * @throws {@link LittlePayError} If the card field is invalid.
  */
 export const cardValidation = (field: keyof CardDetails, value: string) => {
   switch (field) {
@@ -40,8 +40,8 @@ export const cardValidation = (field: keyof CardDetails, value: string) => {
  * Validates the payment payload based on the specified payment provider.
  * @template T - The type of the payment provider.
  * @param payload - The payment payload to be validated.
- * @returns The validated payment payload.
- * @throws {LittlePayError} If the payment payload is invalid.
+ * @returns - The validated payment payload.
+ * @throws {@link LittlePayError} If the payment payload is invalid.
  */
 export const paymentPayloadValidator = <T extends PaymentProvider>(
   payload: ProcessorPayload<T>

@@ -1,5 +1,8 @@
 import { PaToken } from "./PaToken.js";
 
+/**
+ * Device details collected from a browser.
+ */
 export type DeviceDetails = {
   httpBrowserColorDepth: number;
   httpBrowserJavaEnabled: boolean;

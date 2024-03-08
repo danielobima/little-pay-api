@@ -2,7 +2,7 @@ import { baseAxios } from "../utils/axios.js";
 import { paymentPayloadValidator } from "../utils/validation.js";
 
 export type PaymentProvider = "MPESA" | "CARDS" | "MTN";
-type MobilePayload = {
+export type MobilePayload = {
   mobile: string;
 };
 export type CardDetails = {
@@ -11,16 +11,24 @@ export type CardDetails = {
   cc_cvv: string;
   cc_exp: string;
 };
-
-type Payload<T extends PaymentProvider> = T extends "MPESA" | "MTN"
+/**
+ * Details required by the payment provider
+ * @typeParam T - The payment provider type
+ */
+export type Payload<T extends PaymentProvider> = T extends "MPESA" | "MTN"
   ? MobilePayload
   : T extends "CARDS"
   ? CardDetails
   : never;
+
 export interface ProcessorPayload<T extends PaymentProvider> {
   type: T;
   payment: Payload<T>;
 }
+
+/**
+ * The possible payment statuses for a processed payment.
+ */
 export type PaymentStatus = "COMPLETED" | "PENDING" | "FAILED";
 export type ProcessPaymentResponse = {
   status: PaymentStatus;
