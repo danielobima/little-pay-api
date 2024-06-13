@@ -1,7 +1,7 @@
 import { baseAxios } from "../utils/axios.js";
 import { paymentPayloadValidator } from "../utils/validation.js";
 
-export type PaymentProvider = "MPESA" | "CARDS" | "MTN";
+export type PaymentProvider = "MPESA" | "CARDS" | "MTN" | "AIRTEL";
 export type MobilePayload = {
   mobile: string;
 };
@@ -15,7 +15,10 @@ export type CardDetails = {
  * Details required by the payment provider
  * @typeParam T - The payment provider type
  */
-export type Payload<T extends PaymentProvider> = T extends "MPESA" | "MTN"
+export type Payload<T extends PaymentProvider> = T extends
+  | "MPESA"
+  | "MTN"
+  | "AIRTEL"
   ? MobilePayload
   : T extends "CARDS"
   ? CardDetails

@@ -1,10 +1,12 @@
 import { LittlePayClient } from ".";
 
 const client = new LittlePayClient({
-  clientId: "81af9dffa51f6059",
-  clientSecret: "f9oNskEf6kiOZk/GZiARPw==",
-  tokenId: "9f252db9-dfbd-4af6-be88-24f1635c5de3",
+  clientId: "50483af9f53ab972",
+  clientSecret: "G23BKJocOUwauPU0BwmaLw==",
+  tokenId: "70f7c0ff-95c1-49b0-b263-9d7ff8f22767",
 });
+
+let reference = "";
 
 const form = document.getElementById("form");
 if (form) {
@@ -45,8 +47,12 @@ if (form) {
             phoneNumber: "254712345678",
           },
         },
-        returnUrl: "https://google.com",
+        // metadata: {
+        //   authenticationRedirectUrl: "https://pay.little.africa",
+        // },
       });
+
+      reference = intent.getReference();
 
       const paymentProcessor = client.createPaymentProcessor(
         {
@@ -79,6 +85,45 @@ if (confirmForm) {
     try {
       const response = await client.processPayment({
         longPoll: true,
+        stepUpHandler: async function stepup(url, token) {
+          const form = document.createElement("form");
+          form.id = "stepUpForm";
+          form.method = "POST";
+          form.action = url;
+          form.target = "_blank"; //the name property of an iframe element
+
+          // document.getElementById("si")?.classList.remove("hide"); //an iframe element
+
+          const jwtInput = document.createElement("input");
+          jwtInput.type = "hidden";
+          jwtInput.name = "JWT";
+          jwtInput.value = token;
+          form.appendChild(jwtInput);
+          const mdInput = document.createElement("input");
+          mdInput.type = "hidden";
+          mdInput.name = "MD";
+          mdInput.value = reference;
+          form.appendChild(mdInput);
+          document.body.appendChild(form);
+          form.submit();
+          const result = await new Promise((resolve, reject) => {
+            window.addEventListener("message", (event) => {
+              console.log(event.origin);
+              if (event.data.action) {
+                if (
+                  event.data.action === "MAKE_PAYMENT" &&
+                  event.origin === "https://pay.little.africa"
+                ) {
+                  console.log("Authentication successful");
+                  resolve(event.data.action);
+                } else {
+                  console.log(event.data);
+                  reject(new Error("Failed"));
+                }
+              }
+            });
+          });
+        },
       });
 
       console.log(response);
