@@ -2,7 +2,7 @@ import axios from "axios";
 import { LittlePayError, getErrorMessage } from "./errors.js";
 
 const baseAxios = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://pay.little.africa",
 });
 
 baseAxios.interceptors.response.use(
