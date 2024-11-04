@@ -173,7 +173,7 @@ ___
 
 ### Payload
 
-Ƭ **Payload**\<`T`\>: `T` extends ``"MPESA"`` \| ``"MTN"`` \| ``"AIRTEL"`` ? [`MobilePayload`](modules.md#mobilepayload) : `T` extends ``"CARDS"`` ? [`CardDetails`](modules.md#carddetails) : `never`
+Ƭ **Payload**\<`T`\>: `T` extends ``"MPESA"`` \| ``"MTN"`` \| ``"AIRTEL"`` \| ``"TIGOPESA"`` ? [`MobilePayload`](modules.md#mobilepayload) : `T` extends ``"CARDS"`` ? [`CardDetails`](modules.md#carddetails) : `never`
 
 Details required by the payment provider
 
@@ -201,7 +201,7 @@ ___
 
 ### PaymentProvider
 
-Ƭ **PaymentProvider**: ``"MPESA"`` \| ``"CARDS"`` \| ``"MTN"`` \| ``"AIRTEL"``
+Ƭ **PaymentProvider**: ``"MPESA"`` \| ``"CARDS"`` \| ``"MTN"`` \| ``"AIRTEL"`` \| ``"TIGOPESA"``
 
 ___
 

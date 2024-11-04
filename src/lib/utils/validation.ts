@@ -50,8 +50,10 @@ export const paymentPayloadValidator = <T extends PaymentProvider>(
     case "AIRTEL":
     case "MTN":
     case "MPESA":
-      const mpesaPayload: ProcessorPayload<"MPESA" | "MTN" | "AIRTEL"> =
-        payload as ProcessorPayload<"MPESA" | "MTN" | "AIRTEL">;
+    case "TIGOPESA":
+      const mpesaPayload: ProcessorPayload<
+        "MPESA" | "MTN" | "AIRTEL" | "TIGOPESA"
+      > = payload as ProcessorPayload<"MPESA" | "MTN" | "AIRTEL" | "TIGOPESA">;
 
       const mobile = mpesaPayload?.payment?.mobile;
       if (!mobile?.startsWith("+")) {
