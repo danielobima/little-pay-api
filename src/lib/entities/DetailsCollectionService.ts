@@ -56,7 +56,10 @@ export class DetailsCollectionService {
 
     return new Promise((resolve) => {
       window.addEventListener("message", (event) => {
-        if (event.origin === "https://centinelapistag.cardinalcommerce.com") {
+        if (
+          event.origin === "https://centinelapi.cardinalcommerce.com" ||
+          event.origin === "https://centinelapistag.cardinalcommerce.com"
+        ) {
           console.log("Little Pay: Device details collected successfully");
           resolve(details);
         }
