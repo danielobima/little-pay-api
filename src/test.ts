@@ -1,9 +1,9 @@
 import { LittlePayClient } from ".";
 
 const client = new LittlePayClient({
-  clientId: "50483af9f53ab972",
-  clientSecret: "G23BKJocOUwauPU0BwmaLw==",
-  tokenId: "70f7c0ff-95c1-49b0-b263-9d7ff8f22767",
+  clientId: "1b8ad303d5ea2c6f",
+  clientSecret: "QhCtj1/Tovnv6DKtt3CtYg==",
+  tokenId: "f775af9b-1bcc-48e4-97ed-f4894f6eef83",
 });
 
 let reference = "";
@@ -64,7 +64,7 @@ if (form) {
             cc_name,
           },
         },
-        intent.getReference()
+        intent.getReference(),
       );
 
       await client.validateDetails(intent, paymentProcessor);
@@ -85,45 +85,47 @@ if (confirmForm) {
     try {
       const response = await client.processPayment({
         longPoll: true,
-        stepUpHandler: async function stepup(url, token) {
-          const form = document.createElement("form");
-          form.id = "stepUpForm";
-          form.method = "POST";
-          form.action = url;
-          form.target = "_blank"; //the name property of an iframe element
-
-          // document.getElementById("si")?.classList.remove("hide"); //an iframe element
-
-          const jwtInput = document.createElement("input");
-          jwtInput.type = "hidden";
-          jwtInput.name = "JWT";
-          jwtInput.value = token;
-          form.appendChild(jwtInput);
-          const mdInput = document.createElement("input");
-          mdInput.type = "hidden";
-          mdInput.name = "MD";
-          mdInput.value = reference;
-          form.appendChild(mdInput);
-          document.body.appendChild(form);
-          form.submit();
-          const result = await new Promise((resolve, reject) => {
-            window.addEventListener("message", (event) => {
-              console.log(event.origin);
-              if (event.data.action) {
-                if (
-                  event.data.action === "MAKE_PAYMENT" &&
-                  event.origin === "https://pay.little.africa"
-                ) {
-                  console.log("Authentication successful");
-                  resolve(event.data.action);
-                } else {
-                  console.log(event.data);
-                  reject(new Error("Failed"));
-                }
-              }
-            });
-          });
-        },
+        stepUpTarget: "si",
+        waitForStepUp: true,
+        // stepUpHandler: async function stepup(url, token) {
+        //   const form = document.createElement("form");
+        //   form.id = "stepUpForm";
+        //   form.method = "POST";
+        //   form.action = url;
+        //   form.target = "si"; //the name property of an iframe element
+        //
+        //   document.getElementById("si")?.classList.remove("hide"); //an iframe element
+        //
+        //   const jwtInput = document.createElement("input");
+        //   jwtInput.type = "hidden";
+        //   jwtInput.name = "JWT";
+        //   jwtInput.value = token;
+        //   form.appendChild(jwtInput);
+        //   const mdInput = document.createElement("input");
+        //   mdInput.type = "hidden";
+        //   mdInput.name = "MD";
+        //   mdInput.value = reference;
+        //   form.appendChild(mdInput);
+        //   document.body.appendChild(form);
+        //   form.submit();
+        //   const result = await new Promise((resolve, reject) => {
+        //     window.addEventListener("message", (event) => {
+        //       console.log(event.origin);
+        //       if (event.data.action) {
+        //         if (
+        //           event.data.action === "MAKE_PAYMENT" &&
+        //           event.origin === "https://pay.little.africa"
+        //         ) {
+        //           console.log("Authentication successful");
+        //           resolve(event.data.action);
+        //         } else {
+        //           console.log(event.data);
+        //           reject(new Error("Failed"));
+        //         }
+        //       }
+        //     });
+        //   });
+        // },
       });
 
       console.log(response);

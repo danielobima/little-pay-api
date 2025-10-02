@@ -196,6 +196,7 @@ ___
 | `longPoll?` | `boolean` | - |
 | `stepUpHandler?` | (`url`: `string`, `token`: `string`) => `any` | - |
 | `stepUpTarget?` | `string` | Where to display the step up page **`Default`** ```ts "_blank" ``` |
+| `waitForStepUp?` | `boolean` | - |
 
 ___
 

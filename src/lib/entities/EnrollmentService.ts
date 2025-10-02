@@ -8,11 +8,6 @@ import {
 
 export type PaymentAuthActions = "MAKE_PAYMENT" | "AUTHENTICATE" | "FAILED";
 
-// export type Size = {
-//   Width: number;
-//   Height: number;
-// };
-
 export class EnrollmentService {
   private deviceDetails: DeviceDetails;
   private paymentProcessor: PaymentProcessor<"CARDS">;
@@ -23,7 +18,7 @@ export class EnrollmentService {
   constructor(
     reference: string,
     deviceDetails: DeviceDetails,
-    paymentProcessor: PaymentProcessor<"CARDS">
+    paymentProcessor: PaymentProcessor<"CARDS">,
   ) {
     if (paymentProcessor.paymentPayload.type !== "CARDS") {
       throw new LittlePayError("INVALID_DATA", "Invalid payment type");
@@ -87,12 +82,19 @@ export class EnrollmentService {
 
     return new Promise((resolve, reject) => {
       window.addEventListener("message", (event) => {
+        //console.log("message origin", event.origin);
         if (event.data?.action && event.data.action === "MAKE_PAYMENT") {
           resolve(event.data.action);
-        } else {
-          reject(new LittlePayError("UNKNOWN_ERROR", "Unknown error occurred"));
         }
       });
+
+      setTimeout(
+        () =>
+          reject(
+            new LittlePayError("PAYMENT_FAILED", "Authentication Timeout"),
+          ),
+        10 * 60 * 1000,
+      );
     });
   }
 }

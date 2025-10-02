@@ -79,7 +79,7 @@ export class LittlePayClient {
    */
   createPaymentProcessor<T extends PaymentProvider>(
     payload: ProcessorPayload<T>,
-    reference: string
+    reference: string,
   ): PaymentProcessor<T> {
     return new PaymentProcessor(payload, reference);
   }
@@ -92,13 +92,13 @@ export class LittlePayClient {
    */
   async validateDetails<T extends PaymentProvider>(
     intent: Intent,
-    paymentProcessor: PaymentProcessor<T>
+    paymentProcessor: PaymentProcessor<T>,
   ) {
     if (paymentProcessor.paymentPayload.type === "CARDS") {
       const paToken =
         intent.getPaToken() ??
         (await intent.createPaToken(
-          paymentProcessor.paymentPayload as ProcessorPayload<"CARDS">
+          paymentProcessor.paymentPayload as ProcessorPayload<"CARDS">,
         ));
       const detailsCollectionsService = new DetailsCollectionService(paToken);
 
@@ -121,7 +121,7 @@ export class LittlePayClient {
       if (!this.intent || !this.paymentProcessor) {
         throw new LittlePayError(
           "INVALID_DATA",
-          "Intent and Payment Processor not set"
+          "Intent and Payment Processor not set",
         );
       }
       if (!this.validated) {
@@ -134,15 +134,26 @@ export class LittlePayClient {
         const enrollmentService = new EnrollmentService(
           this.intent.getReference(),
           this.deviceDetails,
-          this.paymentProcessor
+          this.paymentProcessor,
         );
 
-        this.paymentProcessor.process(options).then(resolve).catch(reject);
+        if (!options?.waitForStepUp) {
+          this.paymentProcessor.process(options).then(resolve).catch(reject);
+        }
 
         const action = await enrollmentService.checkEnrollment();
 
         if (action === "AUTHENTICATE") {
-          enrollmentService.stepUp(options);
+          const stepUpPromise = enrollmentService.stepUp(options);
+
+          if (options?.waitForStepUp) {
+            const stepUpResult = await stepUpPromise;
+            console.log("Step Up Result", stepUpResult);
+          }
+        }
+
+        if (options?.waitForStepUp) {
+          this.paymentProcessor.process(options).then(resolve).catch(reject);
         }
       } else {
         const response = await this.paymentProcessor.process();

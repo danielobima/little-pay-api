@@ -22,8 +22,8 @@ export type Payload<T extends PaymentProvider> = T extends
   | "TIGOPESA"
   ? MobilePayload
   : T extends "CARDS"
-  ? CardDetails
-  : never;
+    ? CardDetails
+    : never;
 
 export interface ProcessorPayload<T extends PaymentProvider> {
   type: T;
@@ -60,6 +60,8 @@ export type PaymentProcessorOptions = {
    * @default undefined
    */
   stepUpHandler?: (url: string, token: string) => any;
+
+  waitForStepUp?: boolean;
 };
 export class PaymentProcessor<T extends PaymentProvider> {
   paymentPayload: ProcessorPayload<T>;
@@ -75,7 +77,7 @@ export class PaymentProcessor<T extends PaymentProvider> {
   async process(
     options: PaymentProcessorOptions = {
       longPoll: true,
-    }
+    },
   ): Promise<ProcessPaymentResponse> {
     const response = await baseAxios.post<{
       data: ProcessPaymentResponse;
