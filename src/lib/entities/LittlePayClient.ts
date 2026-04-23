@@ -1,3 +1,5 @@
+import { AxiosInstance } from "axios";
+import { createAxiosInstance } from "../utils/axios.js";
 import { LittlePayError } from "../utils/errors.js";
 import {
   DetailsCollectionService,
@@ -31,6 +33,11 @@ export type LittlePayClientConstructorParams = {
    * The token ID for the LittlePay API.
    */
   tokenId: string;
+
+  /**
+   * The base URL for the LittlePay API. Defaults to "https://pay.little.africa".
+   */
+  baseApiUrl?: string;
 };
 
 /**
@@ -44,6 +51,7 @@ export class LittlePayClient {
   private paymentProcessor?: PaymentProcessor<any>;
   private deviceDetails?: DeviceDetails;
   private validated: boolean = false;
+  private axiosInstance: AxiosInstance;
 
   /**
    * Constructs a new instance of the LittlePayClient class.
@@ -53,10 +61,12 @@ export class LittlePayClient {
     clientId,
     clientSecret,
     tokenId,
+    baseApiUrl,
   }: LittlePayClientConstructorParams) {
     this.clientId = clientId;
     this.clientSecret = clientSecret;
     this.tokenId = tokenId;
+    this.axiosInstance = createAxiosInstance(baseApiUrl);
   }
 
   /**
@@ -67,7 +77,12 @@ export class LittlePayClient {
    */
   async createIntent(params: CreateIntentParams): Promise<Intent> {
     const intent = new Intent(params);
-    await intent.create(this.clientId, this.clientSecret, this.tokenId);
+    await intent.create(
+      this.clientId,
+      this.clientSecret,
+      this.tokenId,
+      this.axiosInstance,
+    );
     return intent;
   }
 
@@ -81,7 +96,7 @@ export class LittlePayClient {
     payload: ProcessorPayload<T>,
     reference: string,
   ): PaymentProcessor<T> {
-    return new PaymentProcessor(payload, reference);
+    return new PaymentProcessor(payload, reference, this.axiosInstance);
   }
 
   /**
@@ -99,6 +114,7 @@ export class LittlePayClient {
         intent.getPaToken() ??
         (await intent.createPaToken(
           paymentProcessor.paymentPayload as ProcessorPayload<"CARDS">,
+          this.axiosInstance,
         ));
       const detailsCollectionsService = new DetailsCollectionService(paToken);
 
@@ -135,6 +151,7 @@ export class LittlePayClient {
           this.intent.getReference(),
           this.deviceDetails,
           this.paymentProcessor,
+          this.axiosInstance,
         );
 
         if (!options?.waitForStepUp) {

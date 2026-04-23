@@ -1,3 +1,4 @@
+import { AxiosInstance } from "axios";
 import { baseAxios } from "../utils/axios.js";
 import { paymentPayloadValidator } from "../utils/validation.js";
 
@@ -66,12 +67,18 @@ export type PaymentProcessorOptions = {
 export class PaymentProcessor<T extends PaymentProvider> {
   paymentPayload: ProcessorPayload<T>;
   private reference: string;
+  private axiosInstance: AxiosInstance;
 
-  constructor(payload: ProcessorPayload<T>, reference: string) {
+  constructor(
+    payload: ProcessorPayload<T>,
+    reference: string,
+    axiosInstance: AxiosInstance = baseAxios,
+  ) {
     //TODO: Add client side validation
 
     this.paymentPayload = paymentPayloadValidator(payload);
     this.reference = reference;
+    this.axiosInstance = axiosInstance;
   }
 
   async process(
@@ -79,7 +86,7 @@ export class PaymentProcessor<T extends PaymentProvider> {
       longPoll: true,
     },
   ): Promise<ProcessPaymentResponse> {
-    const response = await baseAxios.post<{
+    const response = await this.axiosInstance.post<{
       data: ProcessPaymentResponse;
     }>(`/pay/${this.reference}/process`, this.paymentPayload, {
       params: {

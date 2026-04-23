@@ -1,3 +1,4 @@
+import { AxiosInstance } from "axios";
 import { baseAxios } from "../utils/axios.js";
 import { LittlePayError } from "../utils/errors.js";
 import { DeviceDetails } from "./DetailsCollectionService.js";
@@ -14,11 +15,13 @@ export class EnrollmentService {
   private reference: string;
   private stepUpUrl?: string;
   private accessToken?: string;
+  private axiosInstance: AxiosInstance;
 
   constructor(
     reference: string,
     deviceDetails: DeviceDetails,
     paymentProcessor: PaymentProcessor<"CARDS">,
+    axiosInstance: AxiosInstance = baseAxios,
   ) {
     if (paymentProcessor.paymentPayload.type !== "CARDS") {
       throw new LittlePayError("INVALID_DATA", "Invalid payment type");
@@ -26,10 +29,11 @@ export class EnrollmentService {
     this.deviceDetails = deviceDetails;
     this.paymentProcessor = paymentProcessor;
     this.reference = reference;
+    this.axiosInstance = axiosInstance;
   }
 
   async checkEnrollment(): Promise<string> {
-    const response = await baseAxios.post<{
+    const response = await this.axiosInstance.post<{
       data: {
         action: PaymentAuthActions;
         accessToken?: string;

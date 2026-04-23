@@ -1,3 +1,4 @@
+import { AxiosInstance } from "axios";
 import { BillingAddress } from "./BillingAddress.js";
 import { PaToken } from "./PaToken.js";
 import { baseAxios } from "../utils/axios.js";
@@ -128,13 +129,14 @@ export class Intent {
   async create(
     clientId: string,
     clientSecret: string,
-    tokenId: string
+    tokenId: string,
+    axiosInstance: AxiosInstance = baseAxios,
   ): Promise<{
     reference: string;
     checkoutUrl: string;
     message: string;
   }> {
-    const response = await baseAxios.post<CreateIntentResponse>(
+    const response = await axiosInstance.post<CreateIntentResponse>(
       `/api/payments/${tokenId}/pay`,
       this.creationParams,
       {
@@ -142,7 +144,7 @@ export class Intent {
           username: clientId,
           password: clientSecret,
         },
-      }
+      },
     );
 
     const { paToken, reference, checkoutUrl, message } = response.data.data;
@@ -186,14 +188,17 @@ export class Intent {
     window.location.assign(this.checkoutUrl);
   }
 
-  async createPaToken(params: ProcessorPayload<"CARDS">): Promise<PaToken> {
+  async createPaToken(
+    params: ProcessorPayload<"CARDS">,
+    axiosInstance: AxiosInstance = baseAxios,
+  ): Promise<PaToken> {
     if (!this.reference) {
       throw new LittlePayError("INVALID_REQUEST", "Reference not available");
     }
 
-    const response = await baseAxios.post<CreateIntentResponse>(
+    const response = await axiosInstance.post<CreateIntentResponse>(
       `/pay/${this.reference}/cspaToken`,
-      params
+      params,
     );
 
     const { paToken } = response.data?.data ?? {};
