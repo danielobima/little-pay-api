@@ -78,6 +78,10 @@ export type CreateIntentParams = {
      * The billing address for the intent.
      */
     billingAddress: BillingAddress;
+    /**
+     * Optional custom metadata fields collected from the customer.
+     */
+    customData?: Record<string, any>;
   };
   /**
    * The metadata for the intent.
@@ -156,6 +160,22 @@ export class Intent {
       merchantName,
       "Nairobi"
     );
+  }
+
+  /**
+   * Generates the QR code data string for Little Wallet (UMI) payment.
+   * Format: <merchantId>,<amount>,<providerReference>
+   * 
+   * @param umiMerchantId - The UMI merchant ID returned from process payment.
+   * @param providerReference - The provider reference returned from process payment.
+   * @returns - The comma-separated string that can be used to generate a QR code.
+   */
+  getLittleWalletQRCodeString(umiMerchantId: string, providerReference: string): string {
+    const amount = this.details?.amount || this.creationParams?.amount;
+    if (amount === undefined) {
+      throw new LittlePayError("INVALID_DATA", "Amount is required to generate QR code");
+    }
+    return `${umiMerchantId},${amount.toFixed(0)},${providerReference}`;
   }
 
   /**

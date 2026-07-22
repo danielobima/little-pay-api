@@ -100,6 +100,29 @@ export class LittlePayClient {
   }
 
   /**
+   * Checks the status of a UMI (Little Wallet) payment.
+   *
+   * @param intentId - The reference/ID of the intent.
+   * @returns - A promise that resolves to the UMI payment status check response.
+   */
+  async checkUmiPaymentStatus(intentId: string): Promise<any> {
+    const response = await this.axiosInstance.get<{
+      data: any;
+    }>(`/pay/${intentId}/umi`);
+    return response.data.data;
+  }
+
+  /**
+   * Checks the status of a Little Wallet (UMI) payment (alias for checkUmiPaymentStatus).
+   *
+   * @param intentId - The reference/ID of the intent.
+   * @returns - A promise that resolves to the Little Wallet payment status check response.
+   */
+  async checkLittleWalletStatus(intentId: string): Promise<any> {
+    return this.checkUmiPaymentStatus(intentId);
+  }
+
+  /**
    * Creates a payment processor with the given payload and reference.
    * @param payload - The payload for the payment processor.
    * @param reference - The reference for the payment processor.

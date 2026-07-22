@@ -106,6 +106,13 @@ export const paymentPayloadValidator = <T extends PaymentProvider>(
         payment: payload.payment || {},
       } as unknown as ProcessorPayload<T>;
 
+    case "UMI":
+    case "LITTLE_WALLET":
+      return {
+        type: "UMI",
+        payment: payload.payment || {},
+      } as unknown as ProcessorPayload<T>;
+
     default:
       throw new LittlePayError("INVALID_DATA", "Invalid payment type");
   }

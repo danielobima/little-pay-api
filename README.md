@@ -88,6 +88,68 @@ await client.validateDetails(intent, paymentProcessor);
 const response = await client.processPayment();
 ```
 
+#### Option 3: Process Tourist Tap (QR Code Payment)
+
+You can process a Tourist Tap payment by generating an EMVCo-compliant QR code for the customer to scan using their Tourist Tap app:
+
+```javascript
+const paymentProcessor = client.createPaymentProcessor(
+  {
+    type: "TouristTap",
+    payment: {},
+  },
+  intent.getReference()
+);
+
+await client.validateDetails(intent, paymentProcessor);
+
+// Generate the EMVCo QR code content string to render in your UI
+const qrString = intent.getTouristTapQRCodeString();
+
+// Process the payment and long-poll status
+const response = await client.processPayment({ longPoll: true });
+if (response.status === "COMPLETED") {
+  // Payment processed successfully
+}
+```
+
+#### Option 4: Process Little Wallet (UMI Payment)
+
+You can process a Little Wallet (UMI) payment by generating a QR code or displaying the Merchant Code & Reference Number manually for the customer to pay via their Little App:
+
+```javascript
+const paymentProcessor = client.createPaymentProcessor(
+  {
+    type: "UMI",
+    payment: {},
+  },
+  intent.getReference()
+);
+
+await client.validateDetails(intent, paymentProcessor);
+
+// 1. Process payment to initialize UMI intent on server and retrieve metadata
+const response = await client.processPayment();
+
+const umiMerchantId = response.meta.umiMerchantId;
+const providerReference = response.meta.providerReference;
+
+// 2. Generate UMI QR code content string (Format: "<merchantId>,<amount>,<providerReference>")
+const qrString = intent.getLittleWalletQRCodeString(umiMerchantId, providerReference);
+
+// 3. Poll status until payment is complete
+const checkStatus = async () => {
+  const res = await client.checkLittleWalletStatus(intent.getReference());
+  if (res.status === "COMPLETED") {
+    // Payment complete
+  } else if (res.status === "FAILED") {
+    // Payment failed
+  } else {
+    // Poll again
+  }
+};
+```
+
 ### Handle the payment response
 
 You can handle the payment response using the `callbackUrl` you provided when creating the payment intent. The response will contain the payment status and details.
