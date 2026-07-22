@@ -1,6 +1,6 @@
 {
   "name": "@littleapp/little-pay-api",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "type": "module",
   "description": "An API library for interacting with the Little Pay API",
   "exports": {
