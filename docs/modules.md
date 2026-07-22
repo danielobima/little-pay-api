@@ -90,8 +90,9 @@ Parameters for creating an intent.
 | `expiresAt?` | `number` | The time at which the intent will expire. Must be a Unix timestamp. |
 | `key` | `string` | A unique key for the intent. |
 | `metadata?` | [`ProcessorPayload`](interfaces/ProcessorPayload.md)\<`any`\> | The metadata for the intent. |
-| `payload` | \{ `billingAddress`: [`BillingAddress`](modules.md#billingaddress)  } | The payload for the intent. This is used to pass billing information and any other required data. |
+| `payload` | \{ `billingAddress`: [`BillingAddress`](modules.md#billingaddress) ; `customData?`: `Record`\<`string`, `any`\>  } | The payload for the intent. This is used to pass billing information and any other required data. |
 | `payload.billingAddress` | [`BillingAddress`](modules.md#billingaddress) | The billing address for the intent. |
+| `payload.customData?` | `Record`\<`string`, `any`\> | Optional custom metadata fields collected from the customer. |
 | `returnUrl?` | `string` | If you use the intent checkout page, the user will be redirected to this URL after the payment is completed. If you are not using the intent checkout page but there was a 3DS challenge, the user will be redirected to this URL after the 3DS challenge is completed. |
 
 ___
@@ -174,7 +175,7 @@ ___
 
 ### Payload
 
-Ƭ **Payload**\<`T`\>: `T` extends ``"MPESA"`` \| ``"MTN"`` \| ``"AIRTEL"`` \| ``"TIGOPESA"`` ? [`MobilePayload`](modules.md#mobilepayload) : `T` extends ``"CARDS"`` ? [`CardDetails`](modules.md#carddetails) : `T` extends ``"TouristTap"`` ? `TouristTapPayload` : `never`
+Ƭ **Payload**\<`T`\>: `T` extends ``"MPESA"`` \| ``"MTN"`` \| ``"AIRTEL"`` \| ``"TIGOPESA"`` ? [`MobilePayload`](modules.md#mobilepayload) : `T` extends ``"CARDS"`` ? [`CardDetails`](modules.md#carddetails) : `T` extends ``"TouristTap"`` ? `TouristTapPayload` : `T` extends ``"UMI"`` \| ``"LITTLE_WALLET"`` ? `UmiPayload` : `never`
 
 Details required by the payment provider
 
@@ -203,7 +204,7 @@ ___
 
 ### PaymentProvider
 
-Ƭ **PaymentProvider**: ``"MPESA"`` \| ``"CARDS"`` \| ``"MTN"`` \| ``"AIRTEL"`` \| ``"TIGOPESA"`` \| ``"TouristTap"``
+Ƭ **PaymentProvider**: ``"MPESA"`` \| ``"CARDS"`` \| ``"MTN"`` \| ``"AIRTEL"`` \| ``"TIGOPESA"`` \| ``"TouristTap"`` \| ``"UMI"`` \| ``"LITTLE_WALLET"``
 
 ___
 

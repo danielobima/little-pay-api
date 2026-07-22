@@ -21,6 +21,7 @@
 - [create](Intent.md#create)
 - [createPaToken](Intent.md#createpatoken)
 - [getCheckoutUrl](Intent.md#getcheckouturl)
+- [getLittleWalletQRCodeString](Intent.md#getlittlewalletqrcodestring)
 - [getPaToken](Intent.md#getpatoken)
 - [getReference](Intent.md#getreference)
 - [getTouristTapQRCodeString](Intent.md#gettouristtapqrcodestring)
@@ -126,6 +127,28 @@ Get the checkout URL.
 **`Throws`**
 
 [LittlePayError](LittlePayError.md) Will throw an error if the checkout URL is not available.
+
+___
+
+### getLittleWalletQRCodeString
+
+▸ **getLittleWalletQRCodeString**(`umiMerchantId`, `providerReference`): `string`
+
+Generates the QR code data string for Little Wallet (UMI) payment.
+Format: <merchantId>,<amount>,<providerReference>
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `umiMerchantId` | `string` | The UMI merchant ID returned from process payment. |
+| `providerReference` | `string` | The provider reference returned from process payment. |
+
+#### Returns
+
+`string`
+
+- The comma-separated string that can be used to generate a QR code.
 
 ___
 

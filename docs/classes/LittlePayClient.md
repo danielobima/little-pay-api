@@ -23,6 +23,8 @@ Used to interact with the LittlePay API.
 
 ### Methods
 
+- [checkLittleWalletStatus](LittlePayClient.md#checklittlewalletstatus)
+- [checkUmiPaymentStatus](LittlePayClient.md#checkumipaymentstatus)
 - [createIntent](LittlePayClient.md#createintent)
 - [createPaymentProcessor](LittlePayClient.md#createpaymentprocessor)
 - [getIntent](LittlePayClient.md#getintent)
@@ -96,6 +98,46 @@ ___
 • `Private` **validated**: `boolean` = `false`
 
 ## Methods
+
+### checkLittleWalletStatus
+
+▸ **checkLittleWalletStatus**(`intentId`): `Promise`\<`any`\>
+
+Checks the status of a Little Wallet (UMI) payment (alias for checkUmiPaymentStatus).
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `intentId` | `string` | The reference/ID of the intent. |
+
+#### Returns
+
+`Promise`\<`any`\>
+
+- A promise that resolves to the Little Wallet payment status check response.
+
+___
+
+### checkUmiPaymentStatus
+
+▸ **checkUmiPaymentStatus**(`intentId`): `Promise`\<`any`\>
+
+Checks the status of a UMI (Little Wallet) payment.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `intentId` | `string` | The reference/ID of the intent. |
+
+#### Returns
+
+`Promise`\<`any`\>
+
+- A promise that resolves to the UMI payment status check response.
+
+___
 
 ### createIntent
 
