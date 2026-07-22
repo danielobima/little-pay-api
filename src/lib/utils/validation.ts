@@ -100,6 +100,12 @@ export const paymentPayloadValidator = <T extends PaymentProvider>(
         },
       } as ProcessorPayload<T>;
 
+    case "TouristTap":
+      return {
+        type: "TouristTap",
+        payment: payload.payment || {},
+      } as unknown as ProcessorPayload<T>;
+
     default:
       throw new LittlePayError("INVALID_DATA", "Invalid payment type");
   }

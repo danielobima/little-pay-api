@@ -87,6 +87,19 @@ export class LittlePayClient {
   }
 
   /**
+   * Retrieves an intent by its reference/ID.
+   *
+   * @param intentId - The reference/ID of the intent to retrieve.
+   * @returns - A promise that resolves to the Intent instance.
+   */
+  async getIntent(intentId: string): Promise<Intent> {
+    const response = await this.axiosInstance.get<{
+      data: any;
+    }>(`/pay/${intentId}`);
+    return new Intent(undefined, response.data.data);
+  }
+
+  /**
    * Creates a payment processor with the given payload and reference.
    * @param payload - The payload for the payment processor.
    * @param reference - The reference for the payment processor.

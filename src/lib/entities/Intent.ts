@@ -4,6 +4,7 @@ import { PaToken } from "./PaToken.js";
 import { baseAxios } from "../utils/axios.js";
 import { ProcessorPayload } from "./PaymentProcessor.js";
 import { LittlePayError } from "../utils/errors.js";
+import { generateEmvcoString, getCurrencyNumericCode } from "../utils/emvco.js";
 
 export type IntentBody = {
   metadata: any & {
@@ -95,13 +96,66 @@ export type CreateIntentResponse = {
 };
 
 export class Intent {
-  private creationParams: CreateIntentParams;
+  private creationParams?: CreateIntentParams;
   private checkoutUrl?: string;
   private reference?: string;
   private paToken?: PaToken;
+  private details?: any;
 
-  constructor(params: CreateIntentParams) {
-    this.creationParams = params;
+  constructor(params?: CreateIntentParams, details?: any) {
+    if (params) this.creationParams = params;
+    if (details) {
+      this.details = details;
+      this.reference = details.id;
+      this.checkoutUrl = details.checkoutUrl;
+      if (details.metadata?.paToken) {
+        this.paToken = details.metadata.paToken;
+      }
+    }
+  }
+
+  /**
+   * Generates the EMVCo QR code string for TouristTap payment.
+   * 
+   * @returns - The EMVCo formatted string that can be used to generate a QR code.
+   * @throws {@link LittlePayError} If the intent ID, currency, or amount is not available.
+   */
+  getTouristTapQRCodeString(): string {
+    const intentId = this.reference || this.details?.id;
+    if (!intentId) {
+      throw new LittlePayError("INVALID_DATA", "Intent ID/reference not available");
+    }
+
+    const currency = this.details?.currency || this.creationParams?.currency;
+    const amount = this.details?.amount || this.creationParams?.amount;
+    const merchantName = this.details?.merchant || "Merchant";
+    const merchantId = this.details?.merchantDetails?.id || "";
+
+    if (!currency || amount === undefined) {
+      throw new LittlePayError(
+        "INVALID_DATA",
+        "Currency and amount are required to generate QR code"
+      );
+    }
+
+    const merchantInfo = new Map<string, string>();
+    merchantInfo.set("00", "com.little.littlepay");
+    merchantInfo.set("01", intentId);
+    if (merchantId) {
+      merchantInfo.set("02", merchantId);
+    }
+
+    return generateEmvcoString(
+      "01",
+      "12",
+      merchantInfo,
+      "0000",
+      getCurrencyNumericCode(currency),
+      amount.toString(),
+      "KE",
+      merchantName,
+      "Nairobi"
+    );
   }
 
   /**

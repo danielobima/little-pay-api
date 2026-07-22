@@ -136,6 +136,7 @@ Parameters for constructing a LittlePayClient instance. All values are available
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
+| `baseApiUrl?` | `string` | The base URL for the LittlePay API. Defaults to "https://pay.little.africa". |
 | `clientId` | `string` | The client ID for the LittlePay API. |
 | `clientSecret` | `string` | The client secret for the LittlePay API. |
 | `tokenId` | `string` | The token ID for the LittlePay API. |
@@ -173,7 +174,7 @@ ___
 
 ### Payload
 
-Ƭ **Payload**\<`T`\>: `T` extends ``"MPESA"`` \| ``"MTN"`` \| ``"AIRTEL"`` \| ``"TIGOPESA"`` ? [`MobilePayload`](modules.md#mobilepayload) : `T` extends ``"CARDS"`` ? [`CardDetails`](modules.md#carddetails) : `never`
+Ƭ **Payload**\<`T`\>: `T` extends ``"MPESA"`` \| ``"MTN"`` \| ``"AIRTEL"`` \| ``"TIGOPESA"`` ? [`MobilePayload`](modules.md#mobilepayload) : `T` extends ``"CARDS"`` ? [`CardDetails`](modules.md#carddetails) : `T` extends ``"TouristTap"`` ? `TouristTapPayload` : `never`
 
 Details required by the payment provider
 
@@ -202,7 +203,7 @@ ___
 
 ### PaymentProvider
 
-Ƭ **PaymentProvider**: ``"MPESA"`` \| ``"CARDS"`` \| ``"MTN"`` \| ``"AIRTEL"`` \| ``"TIGOPESA"``
+Ƭ **PaymentProvider**: ``"MPESA"`` \| ``"CARDS"`` \| ``"MTN"`` \| ``"AIRTEL"`` \| ``"TIGOPESA"`` \| ``"TouristTap"``
 
 ___
 

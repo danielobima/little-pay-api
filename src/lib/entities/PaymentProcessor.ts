@@ -2,7 +2,7 @@ import { AxiosInstance } from "axios";
 import { baseAxios } from "../utils/axios.js";
 import { paymentPayloadValidator } from "../utils/validation.js";
 
-export type PaymentProvider = "MPESA" | "CARDS" | "MTN" | "AIRTEL" | "TIGOPESA";
+export type PaymentProvider = "MPESA" | "CARDS" | "MTN" | "AIRTEL" | "TIGOPESA" | "TouristTap";
 export type MobilePayload = {
   mobile: string;
 };
@@ -12,6 +12,7 @@ export type CardDetails = {
   cc_cvv: string;
   cc_exp: string;
 };
+export type TouristTapPayload = Record<string, any>;
 /**
  * Details required by the payment provider
  * @typeParam T - The payment provider type
@@ -24,7 +25,9 @@ export type Payload<T extends PaymentProvider> = T extends
   ? MobilePayload
   : T extends "CARDS"
     ? CardDetails
-    : never;
+    : T extends "TouristTap"
+      ? TouristTapPayload
+      : never;
 
 export interface ProcessorPayload<T extends PaymentProvider> {
   type: T;

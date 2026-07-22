@@ -16,6 +16,7 @@
 
 ### Properties
 
+- [axiosInstance](PaymentProcessor.md#axiosinstance)
 - [paymentPayload](PaymentProcessor.md#paymentpayload)
 - [reference](PaymentProcessor.md#reference)
 
@@ -27,7 +28,7 @@
 
 ### constructor
 
-• **new PaymentProcessor**\<`T`\>(`payload`, `reference`): [`PaymentProcessor`](PaymentProcessor.md)\<`T`\>
+• **new PaymentProcessor**\<`T`\>(`payload`, `reference`, `axiosInstance?`): [`PaymentProcessor`](PaymentProcessor.md)\<`T`\>
 
 #### Type parameters
 
@@ -37,16 +38,23 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `payload` | [`ProcessorPayload`](../interfaces/ProcessorPayload.md)\<`T`\> |
-| `reference` | `string` |
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `payload` | [`ProcessorPayload`](../interfaces/ProcessorPayload.md)\<`T`\> | `undefined` |
+| `reference` | `string` | `undefined` |
+| `axiosInstance` | `AxiosInstance` | `baseAxios` |
 
 #### Returns
 
 [`PaymentProcessor`](PaymentProcessor.md)\<`T`\>
 
 ## Properties
+
+### axiosInstance
+
+• `Private` **axiosInstance**: `AxiosInstance`
+
+___
 
 ### paymentPayload
 

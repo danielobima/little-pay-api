@@ -12,6 +12,7 @@ Used to interact with the LittlePay API.
 
 ### Properties
 
+- [axiosInstance](LittlePayClient.md#axiosinstance)
 - [clientId](LittlePayClient.md#clientid)
 - [clientSecret](LittlePayClient.md#clientsecret)
 - [deviceDetails](LittlePayClient.md#devicedetails)
@@ -24,6 +25,7 @@ Used to interact with the LittlePay API.
 
 - [createIntent](LittlePayClient.md#createintent)
 - [createPaymentProcessor](LittlePayClient.md#createpaymentprocessor)
+- [getIntent](LittlePayClient.md#getintent)
 - [processPayment](LittlePayClient.md#processpayment)
 - [validateDetails](LittlePayClient.md#validatedetails)
 
@@ -46,6 +48,12 @@ Constructs a new instance of the LittlePayClient class.
 [`LittlePayClient`](LittlePayClient.md)
 
 ## Properties
+
+### axiosInstance
+
+• `Private` **axiosInstance**: `AxiosInstance`
+
+___
 
 ### clientId
 
@@ -133,6 +141,26 @@ Creates a payment processor with the given payload and reference.
 [`PaymentProcessor`](PaymentProcessor.md)\<`T`\>
 
 - A promise that resolves to the created PaymentProcessor instance.
+
+___
+
+### getIntent
+
+▸ **getIntent**(`intentId`): `Promise`\<[`Intent`](Intent.md)\>
+
+Retrieves an intent by its reference/ID.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `intentId` | `string` | The reference/ID of the intent to retrieve. |
+
+#### Returns
+
+`Promise`\<[`Intent`](Intent.md)\>
+
+- A promise that resolves to the Intent instance.
 
 ___
 

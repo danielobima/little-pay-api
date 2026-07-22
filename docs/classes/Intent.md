@@ -12,6 +12,7 @@
 
 - [checkoutUrl](Intent.md#checkouturl)
 - [creationParams](Intent.md#creationparams)
+- [details](Intent.md#details)
 - [paToken](Intent.md#patoken)
 - [reference](Intent.md#reference)
 
@@ -22,19 +23,21 @@
 - [getCheckoutUrl](Intent.md#getcheckouturl)
 - [getPaToken](Intent.md#getpatoken)
 - [getReference](Intent.md#getreference)
+- [getTouristTapQRCodeString](Intent.md#gettouristtapqrcodestring)
 - [redirectToCheckout](Intent.md#redirecttocheckout)
 
 ## Constructors
 
 ### constructor
 
-• **new Intent**(`params`): [`Intent`](Intent.md)
+• **new Intent**(`params?`, `details?`): [`Intent`](Intent.md)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `params` | [`CreateIntentParams`](../modules.md#createintentparams) |
+| `params?` | [`CreateIntentParams`](../modules.md#createintentparams) |
+| `details?` | `any` |
 
 #### Returns
 
@@ -50,7 +53,13 @@ ___
 
 ### creationParams
 
-• `Private` **creationParams**: [`CreateIntentParams`](../modules.md#createintentparams)
+• `Private` `Optional` **creationParams**: [`CreateIntentParams`](../modules.md#createintentparams)
+
+___
+
+### details
+
+• `Private` `Optional` **details**: `any`
 
 ___
 
@@ -68,15 +77,16 @@ ___
 
 ### create
 
-▸ **create**(`clientId`, `clientSecret`, `tokenId`): `Promise`\<\{ `checkoutUrl`: `string` ; `message`: `string` ; `reference`: `string`  }\>
+▸ **create**(`clientId`, `clientSecret`, `tokenId`, `axiosInstance?`): `Promise`\<\{ `checkoutUrl`: `string` ; `message`: `string` ; `reference`: `string`  }\>
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `clientId` | `string` |
-| `clientSecret` | `string` |
-| `tokenId` | `string` |
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `clientId` | `string` | `undefined` |
+| `clientSecret` | `string` | `undefined` |
+| `tokenId` | `string` | `undefined` |
+| `axiosInstance` | `AxiosInstance` | `baseAxios` |
 
 #### Returns
 
@@ -86,13 +96,14 @@ ___
 
 ### createPaToken
 
-▸ **createPaToken**(`params`): `Promise`\<[`PaToken`](../modules.md#patoken)\>
+▸ **createPaToken**(`params`, `axiosInstance?`): `Promise`\<[`PaToken`](../modules.md#patoken)\>
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `params` | [`ProcessorPayload`](../interfaces/ProcessorPayload.md)\<``"CARDS"``\> |
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `params` | [`ProcessorPayload`](../interfaces/ProcessorPayload.md)\<``"CARDS"``\> | `undefined` |
+| `axiosInstance` | `AxiosInstance` | `baseAxios` |
 
 #### Returns
 
@@ -147,6 +158,24 @@ Get the intent reference.
 **`Throws`**
 
 [LittlePayError](LittlePayError.md) If the reference is not available.
+
+___
+
+### getTouristTapQRCodeString
+
+▸ **getTouristTapQRCodeString**(): `string`
+
+Generates the EMVCo QR code string for TouristTap payment.
+
+#### Returns
+
+`string`
+
+- The EMVCo formatted string that can be used to generate a QR code.
+
+**`Throws`**
+
+[LittlePayError](LittlePayError.md) If the intent ID, currency, or amount is not available.
 
 ___
 
